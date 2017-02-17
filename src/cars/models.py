@@ -5,12 +5,23 @@ from django.db import models
 User = settings.AUTH_USER_MODEL
 
 class Car(models.Model):
+	first_owner = models.OneToOneField(User)
 	# user = models.ForeignKey(User)
-	driver = models.ManyToManyField(User)
+	# driver = models.ManyToManyField(User)
 	name = models.CharField(max_length=120)
 
 	def __str__(self):
 		return self.name
+
+
+# car_1 = Car.objects.first()
+
+# cfe = car_1.first_owner
+
+# User = cfe.__class__
+
+
+
 
 # car_1 = Car.objects.first()
 # user_qs = car_1.drivers.all()  # returns queryset of users
