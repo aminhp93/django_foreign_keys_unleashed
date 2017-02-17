@@ -10,12 +10,20 @@ def set_delete_user():
 	User = get_user_model()
 	return User.objects.get_or_create(username='deleted')[0]
 
+def limit_car_choices():
+	Q = models.Q
+	# return {"is_staff": True}
+	return Q(username__icontains="e") | Q(username__icontains="c")
 
 
 class Car(models.Model):
 	# user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 	# user = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1)
-	user = models.ForeignKey(User, on_delete=models.SET(set_delete_user))
+	user = models.ForeignKey(
+		User, 
+		on_delete=models.SET(set_delete_user),
+		limit_choices_to = limit_car_choices,
+		)
 	# first_owner = models.OneToOneField(User)
 	# user = models.ForeignKey(User)
 	# driver = models.ManyToManyField(User)
